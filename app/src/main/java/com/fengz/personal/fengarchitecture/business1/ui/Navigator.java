@@ -25,7 +25,12 @@ public class Navigator {
     }
 
     public void navigator2LoginAct(@NonNull Context context) {
-        Intent intent = LoginActivity.getCallingIntent(context);
+        Intent intent = LoginActivity.getCallingIntent(context,false);
+        context.startActivity(intent);
+    }
+
+    public void navigator2LoginActBack(@NonNull Context context) {
+        Intent intent = LoginActivity.getCallingIntent(context,true);
         context.startActivity(intent);
     }
 

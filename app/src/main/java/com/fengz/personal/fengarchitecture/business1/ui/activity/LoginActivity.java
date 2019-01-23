@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,8 +24,12 @@ import butterknife.OnTextChanged;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
 
-    public static Intent getCallingIntent(@NonNull Context context){
-        return new Intent(context,LoginActivity.class);
+    public static final String PARA_FORM_MAIN = "para_form_main";
+
+    public static Intent getCallingIntent(@NonNull Context context, boolean formMain) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra(PARA_FORM_MAIN, formMain);
+        return intent;
     }
 
     @Inject
@@ -41,11 +46,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @BindView(R.id.btn_login_login_act)
     Button mBtnLogin;
 
+    private boolean canBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        canBack = getIntent().getBooleanExtra(PARA_FORM_MAIN, false);
         setTitle("");
         setHomeAsUp(R.drawable.ic_cancel_gray);
         reloadLastUser();
@@ -74,7 +82,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void loginSuccess() {
-        mNavigator.navigator2MainAct(this);
+        if (!canBack) {
+            mNavigator.navigator2MainAct(this);
+        }
         onBackPressed();
     }
 
@@ -82,12 +92,20 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         return !(TextUtils.isEmpty(name) || TextUtils.isEmpty(pwd));
     }
 
-    @OnClick(R.id.btn_login_login_act)
-    public void onViewClicked() {
-        String name = mEtUser.getText().toString();
-        String pwd = mEtPassword.getText().toString();
-        if (check(name, pwd)) {
-            mPresenter.login(name, pwd);
+    @OnClick({R.id.btn_login_login_act, R.id.tv_skip_login_act})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_login_login_act:
+                String name = mEtUser.getText().toString();
+                String pwd = mEtPassword.getText().toString();
+                if (check(name, pwd)) {
+                    mPresenter.login(name, pwd);
+                }
+                break;
+            case R.id.tv_skip_login_act:
+                // 假设登录处理
+                loginSuccess();
+                break;
         }
     }
 

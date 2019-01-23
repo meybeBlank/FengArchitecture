@@ -10,13 +10,13 @@
         android:id="@+id/tv_title_main_act"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:background="@color/grey_dark"
+        android:background="@color/c_cecece_background_gray"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_12"
         android:paddingTop="@dimen/dp_24"
         tools:text="搞笑段子"
         android:textColor="@color/c_333333_text"
-        android:textSize="@dimen/sp_18" />
+        android:textSize="@dimen/sp_16" />
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
         android:id="@+id/viewpager_main_act"

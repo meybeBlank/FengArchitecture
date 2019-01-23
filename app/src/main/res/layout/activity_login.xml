@@ -54,7 +54,7 @@
         android:layout_height="1px"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:background="@color/c_dfdfdf_space_line" />
+        android:background="@color/c_dfdfdf_background_gray" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -95,7 +95,18 @@
         android:layout_height="1px"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:background="@color/c_dfdfdf_space_line" />
+        android:background="@color/c_dfdfdf_background_gray" />
+
+    <TextView
+        android:id="@+id/tv_skip_login_act"
+        android:text="跳过登录"
+        android:drawableRight="@drawable/ic_arrow_right_gray"
+        android:drawablePadding="@dimen/dp_4"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/dp_12"
+        android:textColor="@color/c_747474"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_login_login_act"
@@ -104,11 +115,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/dp_54"
         android:layout_marginRight="@dimen/dp_54"
-        android:layout_marginTop="@dimen/dp_27"
+        android:layout_marginTop="@dimen/dp_12"
         android:background="@drawable/selector_btn"
         android:enabled="false"
         android:text="登录"
         android:textColor="@color/white"
-        android:textSize="13dip" />
+        android:textSize="@dimen/sp_17" />
 
 </LinearLayout>

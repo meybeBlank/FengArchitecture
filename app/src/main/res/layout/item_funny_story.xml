@@ -22,6 +22,6 @@
         android:layout_height="1px"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/dp_8"
-        android:background="@color/c_dfdfdf_space_line" />
+        android:background="@color/c_dfdfdf_background_gray" />
 
 </FrameLayout>

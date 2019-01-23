@@ -16,6 +16,8 @@ import com.fengz.personal.fengarchitecture.R;
 import com.fengz.personal.fengarchitecture.base.mvp.BaseActivity;
 import com.fengz.personal.fengarchitecture.business1.contract.MainContract;
 import com.fengz.personal.fengarchitecture.business1.ui.adapter.MainPageAdapter;
+import com.fengz.personal.fengarchitecture.utils.ScreenUtils;
+import com.fengz.personal.fengarchitecture.utils.ToastUtils;
 
 import butterknife.BindView;
 
@@ -35,6 +37,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.tv_title_main_act)
     TextView mTvTitle;
 
+    private MainPageAdapter mAdapter;
+    private long lastClick = 0;
+
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -43,37 +48,54 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initUI();
+    }
+
+    public void setFull(boolean full) {
+        ScreenUtils.setFullScreen(this, full);
     }
 
     private void initUI() {
 
-        MainPageAdapter adapter = new MainPageAdapter(getSupportFragmentManager());
-        mViewpagerMainAct.setAdapter(adapter);
+        mAdapter = new MainPageAdapter(getSupportFragmentManager());
+        mViewpagerMainAct.setAdapter(mAdapter);
         mViewpagerMainAct.setOffscreenPageLimit(4);
-        mViewpagerMainAct.setPagingEnabled(true);
+        mViewpagerMainAct.setPagingEnabled(false);
         mViewpagerMainAct.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-                if (i == 0 || (i == 2 && v > 0) || (i == 3 && v == 0)) {
-                    mTvTitle.setVisibility(View.INVISIBLE);
-                } else {
-                    mTvTitle.setVisibility(View.VISIBLE);
-                }
+//                if (i == 0 || (i == 2 && v > 0) || (i == 3 && v == 0)) {
+//                    mTvTitle.setVisibility(View.INVISIBLE);
+//                    setFull(false);
+//                } else {
+//                    setFull(true);
+//                    mTvTitle.setVisibility(View.VISIBLE);
+//                }
             }
 
             @Override
             public void onPageSelected(int i) {
                 mNavigatorMainAct.setCurrentItem(i);
-                if (i == 1) {
-                    mTvTitle.setText("搞笑段子");
-                    mTvTitle.setVisibility(View.VISIBLE);
-                } else if (i == 2) {
-                    mTvTitle.setText("搞笑视频");
-                    mTvTitle.setVisibility(View.VISIBLE);
-                } else {
-                    mTvTitle.setVisibility(View.GONE);
+                switch (i){
+                    case 0:
+                        mTvTitle.setVisibility(View.GONE);
+                        setFull(false);
+                        break;
+                    case 1:
+                        mTvTitle.setText("段子");
+                        mTvTitle.setVisibility(View.VISIBLE);
+                        setFull(true);
+                        break;
+                    case 2:
+                        mTvTitle.setText("视频");
+                        mTvTitle.setVisibility(View.VISIBLE);
+                        setFull(true);
+                        break;
+                    case 3:
+                        mTvTitle.setText("我的");
+                        mTvTitle.setVisibility(View.VISIBLE);
+                        setFull(true);
+                        break;
                 }
             }
 
@@ -129,6 +151,26 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 //        mNavigatorMainAct.setOnNavigationPositionListener(y -> {
 //            // Manage the new y position
 //        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mViewpagerMainAct.getCurrentItem() == 0) {
+            long second = System.currentTimeMillis() / 1000;
+            if (second - lastClick <= 2) {
+                super.onBackPressed();
+            } else {
+                lastClick = second;
+                ToastUtils.show("再次点击退出程序");
+            }
+        } else {
+            switchFragment(0);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

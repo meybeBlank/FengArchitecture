@@ -26,7 +26,7 @@ import yuan.kuo.yu.view.YRecyclerView;
  * <p>
  * 功能描述：搞笑视频 Fragment
  */
-public class FunnyVideoFragment extends BaseFragment implements MineContract.View {
+public class FunnyVideoFragment extends BaseFragment implements FunnyVideoContract.View {
 
     @Inject
     @APresenter

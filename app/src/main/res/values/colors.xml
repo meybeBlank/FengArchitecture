@@ -19,7 +19,8 @@
     <color name="c_333333_text">#333333</color>
     <color name="c_2d2d2d_text_gray">#2D2D2D</color>
     <color name="c_b8b8b8_hint">#b8b8b8</color>
-    <color name="c_dfdfdf_space_line">#dfdfdf</color>
+    <color name="c_dfdfdf_background_gray">#dfdfdf</color>
+    <color name="c_cecece_background_gray">#eeeeee</color>
     <color name="c_ff7f20_orange_e">#FF7F20</color>
     <color name="c_fbac71_orange_s">#FBAC71</color>
 

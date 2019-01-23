@@ -1,5 +1,7 @@
 package com.fengz.personal.fengarchitecture.base;
 
+import android.text.TextUtils;
+
 import com.fengz.personal.fengarchitecture.business1.model.entity.UserModel;
 
 /**
@@ -18,5 +20,9 @@ public class Constants {
 
     public static void setUser(UserModel user) {
         Constants.user = user;
+    }
+
+    public static boolean isLogin(){
+        return !(user == null || TextUtils.isEmpty(user.getPhone()));
     }
 }
