@@ -19,8 +19,14 @@ public class ResponseShuck<T> {
     @SerializedName("code")
     private int code;
 
+    @SerializedName("status")
+    private int status;
+
     @SerializedName("data")
     private T content;
+
+    @SerializedName("body")
+    private T body;
 
     @SerializedName("msg")
     private String msg;
@@ -29,12 +35,24 @@ public class ResponseShuck<T> {
         return code;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setBody(T body) {
+        this.body = body;
+    }
+
     public void setCode(int code) {
         this.code = code;
     }
 
     public T getContent() {
-        return content;
+        return content == null ? body : content;
     }
 
     public void setContent(T content) {

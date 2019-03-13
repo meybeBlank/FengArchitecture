@@ -10,15 +10,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        // 项目Url路径配置  debug包路径
+        // release是否打印日志 默认false
+        buildConfigField('boolean', 'LOG_RELEASE_SHOW', 'false')
+        // debug日志等级 默认最低
+        buildConfigField('int', 'LOG_DEBUG_LEVEL', '0')
+
+        // 默认项目Url路径配置  debug包路径
         buildConfigField('String', 'DEBUG_URL', '"https://www.apiopen.top"')
-        // 项目Url路径配置  release包路径
+        // 默认项目Url路径配置  release包路径
         buildConfigField('String', 'RELEASE_URL', '"https://www.apiopen.top"')
 
-        // 登录 项目Url路径配置  debug包路径
-        buildConfigField('String', 'DEBUG_URL_L', '"https://www.apiopen.top"')
-        // 登录 项目Url路径配置  release包路径
-        buildConfigField('String', 'RELEASE_URL_L', '"https://www.apiopen.top"')
+        // xiaok 项目Url路径配置  debug包路径
+        buildConfigField('String', 'DEBUG_URL_XK', '"http://test.merchant.wmdev2.lsh123.com/"')
+        // xiaok 项目Url路径配置  release包路径
+        buildConfigField('String', 'RELEASE_URL_XK', '"http://test.merchant.wmdev2.lsh123.com/"')
     }
     buildTypes {
         release {

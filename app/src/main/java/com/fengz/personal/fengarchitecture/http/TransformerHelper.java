@@ -39,7 +39,7 @@ public class TransformerHelper {
      */
     public static <T extends ResponseShuck<K>, K> ObservableTransformer<T, K> transform() {
         return upstream -> upstream.flatMap((Function<T, ObservableSource<K>>) t -> {
-            if (t.getCode() == 200) {
+            if (t.getCode() == 200 || t.getStatus() == 1) {
                 return Observable.<K>just(t.getContent());
             } else {
                 return Observable.error(ErrExceptionFactory.create(t));

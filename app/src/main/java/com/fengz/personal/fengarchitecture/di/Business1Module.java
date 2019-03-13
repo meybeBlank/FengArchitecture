@@ -6,12 +6,14 @@ import com.fengz.personal.fengarchitecture.business1.contract.HomeContract;
 import com.fengz.personal.fengarchitecture.business1.contract.LoginContract;
 import com.fengz.personal.fengarchitecture.business1.contract.MainContract;
 import com.fengz.personal.fengarchitecture.business1.contract.MineContract;
+import com.fengz.personal.fengarchitecture.business1.contract.UpdateVersionContract;
 import com.fengz.personal.fengarchitecture.business1.contract.WelcomeContract;
 import com.fengz.personal.fengarchitecture.business1.presenter.FunnyStoryPresenter;
 import com.fengz.personal.fengarchitecture.business1.presenter.FunnyVideoPresenter;
 import com.fengz.personal.fengarchitecture.business1.presenter.HomePresenter;
 import com.fengz.personal.fengarchitecture.business1.presenter.LoginPresenter;
 import com.fengz.personal.fengarchitecture.business1.presenter.MinePresenter;
+import com.fengz.personal.fengarchitecture.business1.presenter.UpdateVersionPresenter;
 import com.fengz.personal.fengarchitecture.business1.presenter.WelcomePresenter;
 import com.fengz.personal.fengarchitecture.business1.ui.activity.LoginActivity;
 import com.fengz.personal.fengarchitecture.business1.ui.activity.MainActivity;
@@ -34,6 +36,9 @@ public abstract class Business1Module {
 
     @Binds
     abstract LoginContract.Presenter loginPresenterInject(LoginPresenter presenter);
+
+    @Binds
+    abstract UpdateVersionContract.Presenter UpdateVersionPresenterInject(UpdateVersionPresenter presenter);
 
     @ActivityScope
     @ContributesAndroidInjector

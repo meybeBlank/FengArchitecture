@@ -1,9 +1,14 @@
 package com.fengz.personal.fengarchitecture.business1.ui.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -13,11 +18,18 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.fengz.personal.fengarchitecture.R;
+import com.fengz.personal.fengarchitecture.base.mvp.APresenter;
 import com.fengz.personal.fengarchitecture.base.mvp.BaseActivity;
 import com.fengz.personal.fengarchitecture.business1.contract.MainContract;
+import com.fengz.personal.fengarchitecture.business1.contract.UpdateVersionContract;
+import com.fengz.personal.fengarchitecture.business1.model.entity.CheckVersionBean;
 import com.fengz.personal.fengarchitecture.business1.ui.adapter.MainPageAdapter;
+import com.fengz.personal.fengarchitecture.common.ProgressDialog;
+import com.fengz.personal.fengarchitecture.utils.DialogManager;
 import com.fengz.personal.fengarchitecture.utils.ScreenUtils;
 import com.fengz.personal.fengarchitecture.utils.ToastUtils;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -28,7 +40,9 @@ import butterknife.BindView;
  * <p>
  * 功能描述：主界面 包含四个子界面
  */
-public class MainActivity extends BaseActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View,UpdateVersionContract.View {
+
+    private static final int REQUEST_PERMISSION = 0x123;
 
     @BindView(R.id.viewpager_main_act)
     AHBottomNavigationViewPager mViewpagerMainAct;
@@ -40,6 +54,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private MainPageAdapter mAdapter;
     private long lastClick = 0;
 
+    private AlertDialog mAlertDialog;
+    private CheckVersionBean mVersionBean;
+    private ProgressDialog mProgressDialog;
+
+    @Inject
+    @APresenter
+    UpdateVersionContract.Presenter mUpdatePresenter;
+
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -49,6 +71,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
+        mUpdatePresenter.checkUpdate();
     }
 
     public void setFull(boolean full) {
@@ -176,5 +199,61 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void switchFragment(int position) {
         mNavigatorMainAct.setCurrentItem(position);
+    }
+
+    @Override
+    public void updateApk(CheckVersionBean bean) {
+        mVersionBean = bean;
+        checkPermission(bean);
+    }
+
+    public void showUpdateDialog(CheckVersionBean bean) {
+        mAlertDialog = DialogManager.createAlertDialog(this, "新版本升级",
+                bean.getUpContent(), "升级", "取消",
+                (dialogInterface, i) -> {
+                    mUpdatePresenter.downloadAndInstall(bean);
+                    mProgressDialog = DialogManager.showProgressDialog(MainActivity.this, "下载中",
+                            (dialogInterface1, i1) -> {
+                                mUpdatePresenter.cancelDownload();
+                            });
+                    mProgressDialog.show();
+                },
+                (dialogInterface, i) ->
+                        mAlertDialog.dismiss());
+        mAlertDialog.show();
+    }
+
+    @Override
+    public void refreshProgress(int current, int total) {
+        if (mProgressDialog != null) {
+            if (current == total) {
+                mProgressDialog.dismiss();
+            } else {
+                mProgressDialog.setProgress(current, total);
+            }
+        }
+    }
+
+    private void checkPermission(CheckVersionBean bean) {
+        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            showUpdateDialog(bean);
+        } else if (permission == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showUpdateDialog(mVersionBean);
+                } else {
+                    ToastUtils.show("没有权限，无法升级，请开启权限重试");
+                }
+                break;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.fengz.personal.fengarchitecture.business1.model.api;
 
+import com.fengz.personal.fengarchitecture.business1.model.entity.CheckVersionBean;
 import com.fengz.personal.fengarchitecture.business1.model.entity.JokeModule;
 import com.fengz.personal.fengarchitecture.business1.model.entity.UserModel;
 import com.fengz.personal.fengarchitecture.http.ResponseShuck;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -29,7 +31,6 @@ public interface UserService {
      * <p>
      * 功能描述：用户注册，这里只是完成功能，并没有实际意义
      */
-    @Headers("url:login")
     @GET("/createUser")
     Observable<ResponseShuck<UserModel>> register(
             @Query("key") String key,
@@ -44,7 +45,6 @@ public interface UserService {
      * <p>
      * 功能描述：登录，这里只是完成功能，并没有实际意义
      */
-    @Headers("url:login")
     @GET("/login")
     Observable<ResponseShuck<UserModel>> login(
             @Query("key") String key,
@@ -64,4 +64,15 @@ public interface UserService {
             @Query("type") int type,
             @Query("page") int page
     );
+
+    /**
+     * 创建时间：2019/3/12
+     * 版   本：v1.0.0
+     * 作   者：fengzhen
+     * <p>
+     * 功能描述：检测是否需要升级
+     */
+    @Headers("url:xiaok")
+    @GET("solitaire/sys/canUpSys")
+    Observable<ResponseShuck<CheckVersionBean>> checkUpload();
 }

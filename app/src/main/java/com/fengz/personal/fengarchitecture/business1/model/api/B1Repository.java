@@ -1,5 +1,6 @@
 package com.fengz.personal.fengarchitecture.business1.model.api;
 
+import com.fengz.personal.fengarchitecture.business1.model.entity.CheckVersionBean;
 import com.fengz.personal.fengarchitecture.business1.model.entity.JokeModule;
 import com.fengz.personal.fengarchitecture.business1.model.entity.UserModel;
 import com.fengz.personal.fengarchitecture.http.TransformerHelper;
@@ -39,7 +40,12 @@ public class B1Repository {
     }
 
     public Observable<List<JokeModule>> getJokes(int type, int page) {
-        return mUserService.getJokes(type,page)
+        return mUserService.getJokes(type, page)
+                .compose(TransformerHelper.observableTransformer());
+    }
+
+    public Observable<CheckVersionBean> checkUpload() {
+        return mUserService.checkUpload()
                 .compose(TransformerHelper.observableTransformer());
     }
 }

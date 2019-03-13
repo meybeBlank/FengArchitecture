@@ -28,8 +28,8 @@ public class MultipleUrlIntercept implements Interceptor {
             builder.removeHeader("url");
             String urlname = urlnameList.get(0);
             HttpUrl baseURL=null;
-            if ("login".equals(urlname)) {
-                String url = BuildConfig.DEBUG ? BuildConfig.DEBUG_URL_L : BuildConfig.RELEASE_URL_L;
+            if ("xiaok".equals(urlname)) {
+                String url = BuildConfig.DEBUG ? BuildConfig.DEBUG_URL_XK : BuildConfig.RELEASE_URL_XK;
                 baseURL = HttpUrl.parse(url);
             }
             //重建新的HttpUrl，需要重新设置的url部分

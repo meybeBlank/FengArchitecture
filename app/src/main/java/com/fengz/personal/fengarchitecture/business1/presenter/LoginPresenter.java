@@ -6,7 +6,6 @@ import com.fengz.personal.fengarchitecture.business1.contract.LoginContract;
 import com.fengz.personal.fengarchitecture.business1.model.PreferencesRepository;
 import com.fengz.personal.fengarchitecture.business1.model.api.B1Repository;
 import com.fengz.personal.fengarchitecture.business1.model.entity.UserModel;
-import com.fengz.personal.fengarchitecture.di.ActivityScope;
 import com.fengz.personal.fengarchitecture.http.BaseObserver.BaseObserver;
 
 import javax.inject.Inject;

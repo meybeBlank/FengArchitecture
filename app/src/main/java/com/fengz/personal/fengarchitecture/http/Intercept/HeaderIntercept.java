@@ -1,5 +1,9 @@
 package com.fengz.personal.fengarchitecture.http.Intercept;
 
+import android.os.Build;
+
+import com.fengz.personal.fengarchitecture.BuildConfig;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -18,7 +22,7 @@ public class HeaderIntercept implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
         builder.header("platform", "Android")
-                .addHeader("version", "1.0.0");
+                .addHeader("api-version", BuildConfig.VERSION_NAME);
         return chain.proceed(builder.build());
     }
 }

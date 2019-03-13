@@ -1,29 +1,37 @@
 package com.fengz.personal.fengarchitecture.utils;
 
-import android.app.Application;
-import android.content.Context;
 import android.widget.Toast;
 
 import com.fengz.personal.fengarchitecture.base.MyApplication;
 
-import javax.inject.Inject;
+import java.lang.ref.WeakReference;
 
 public class ToastUtils {
-    private static Toast mToast = null;
+    private static WeakReference<Toast> mWeakReferenceToast = null;
 
-    public static void show( String msg) {
-        showSingleToast( msg, Toast.LENGTH_SHORT);
+    public static void show(String msg) {
+        showSingleToast(msg, Toast.LENGTH_SHORT);
     }
 
     /**
      * 单例toast 多个toast即时刷新
+     *
+     * @param msg
+     * @param duraion
      */
-    private static void showSingleToast(String msg, int duraion) {
-        if (mToast == null) {
-            mToast = Toast.makeText(MyApplication.getContext(), "", duraion);
+    public static void showSingleToast(String msg, int duraion) {
+        try {
+            Toast singleToast = null;
+            if (mWeakReferenceToast == null || (singleToast = mWeakReferenceToast.get()) == null) {
+                singleToast = Toast.makeText(MyApplication.getContext(), "", duraion);
+                mWeakReferenceToast = new WeakReference(singleToast);
+            }
+            singleToast.setText(msg);
+            singleToast.setDuration(duraion);
+            singleToast.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mToast.setText(msg);
-        mToast.setDuration(duraion);
-        mToast.show();
+
     }
 }
