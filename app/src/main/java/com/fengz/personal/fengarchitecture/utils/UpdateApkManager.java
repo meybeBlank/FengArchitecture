@@ -44,7 +44,7 @@ public class UpdateApkManager {
     private OnUpdateListener mUpdateListener;
 
     public UpdateApkManager(Activity activity) {
-        weakReference = new WeakReference<Activity>(activity);
+        weakReference = new WeakReference<>(activity);
         mDownloadManager = (DownloadManager) weakReference.get().getSystemService(Context.DOWNLOAD_SERVICE);
         mDownLoadChangeObserver = new DownloadChangeObserver(new Handler());
         mDownloadReceiver = new DownloadReceiver();
@@ -229,7 +229,6 @@ public class UpdateApkManager {
                 File apkFile = queryDownloadedApk(context, completeDownLoadId);
                 uri = Uri.fromFile(apkFile);
             } else { // Android 7.0 以上
-
                 File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                 if (!directory.exists()) {
                     directory.mkdir();

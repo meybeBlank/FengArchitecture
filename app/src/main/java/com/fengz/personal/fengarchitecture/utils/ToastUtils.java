@@ -7,6 +7,7 @@ import com.fengz.personal.fengarchitecture.base.MyApplication;
 import java.lang.ref.WeakReference;
 
 public class ToastUtils {
+    // 简单缓存Toast
     private static WeakReference<Toast> mWeakReferenceToast = null;
 
     public static void show(String msg) {

@@ -25,7 +25,7 @@ public class ServiceFactory {
     /**
      * 请求超时时间
      */
-    private static final int DEFAULT_TIMEOUT = 5;
+    private static final int DEFAULT_TIMEOUT = 10;
 
     private final Retrofit mRetrofit;
 

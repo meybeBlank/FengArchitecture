@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,11 +24,15 @@ import com.fengz.personal.fengarchitecture.base.mvp.BaseActivity;
 import com.fengz.personal.fengarchitecture.business1.contract.MainContract;
 import com.fengz.personal.fengarchitecture.business1.contract.UpdateVersionContract;
 import com.fengz.personal.fengarchitecture.business1.model.entity.CheckVersionBean;
+import com.fengz.personal.fengarchitecture.business1.model.entity.TestBean;
 import com.fengz.personal.fengarchitecture.business1.ui.adapter.MainPageAdapter;
 import com.fengz.personal.fengarchitecture.common.ProgressDialog;
 import com.fengz.personal.fengarchitecture.utils.DialogManager;
+import com.fengz.personal.fengarchitecture.utils.JSonParser;
 import com.fengz.personal.fengarchitecture.utils.ScreenUtils;
 import com.fengz.personal.fengarchitecture.utils.ToastUtils;
+
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
@@ -40,7 +45,7 @@ import butterknife.BindView;
  * <p>
  * 功能描述：主界面 包含四个子界面
  */
-public class MainActivity extends BaseActivity implements MainContract.View,UpdateVersionContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View, UpdateVersionContract.View {
 
     private static final int REQUEST_PERMISSION = 0x123;
 
@@ -65,6 +70,8 @@ public class MainActivity extends BaseActivity implements MainContract.View,Upda
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
+
+//    private static String json = "{\"ret\":1000,\"content\":{\"scalar\":false},\"msg\":\"msg是无知的\",\"timestamp\":1553828024,\"zone_id\":\"6000\",\"list\":[{\"a\":\"listinfo1\"},{\"a\":\"listinfo2\"},{\"a\":\"listinfo3\"}]}";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +106,7 @@ public class MainActivity extends BaseActivity implements MainContract.View,Upda
             @Override
             public void onPageSelected(int i) {
                 mNavigatorMainAct.setCurrentItem(i);
-                switch (i){
+                switch (i) {
                     case 0:
                         mTvTitle.setVisibility(View.GONE);
                         setFull(false);
