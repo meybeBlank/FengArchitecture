@@ -35,7 +35,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View, U
 
     public static final String PARA_FORM_MAIN = "para_form_main";
     private static final int REQUEST_PERMISSION = 0x123;
-    private ProgressDialog mProgressDialog;
 
     public static Intent getCallingIntent(@NonNull Context context, boolean formMain) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -61,6 +60,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View, U
     @BindView(R.id.btn_login_login_act)
     Button mBtnLogin;
 
+    private ProgressDialog mProgressDialog;
     private AlertDialog mAlertDialog;
     private boolean canBack;
     private CheckVersionBean mVersionBean;

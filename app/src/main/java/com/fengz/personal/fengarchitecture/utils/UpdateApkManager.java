@@ -227,6 +227,10 @@ public class UpdateApkManager {
                 uri = mDownloadManager.getUriForDownloadedFile(completeDownLoadId);
             } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) { // 6.0 - 7.0
                 File apkFile = queryDownloadedApk(context, completeDownLoadId);
+                if (apkFile == null) {
+                    ToastUtils.show("安装包被删除，请重新下载");
+                    return;
+                }
                 uri = Uri.fromFile(apkFile);
             } else { // Android 7.0 以上
                 File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -236,6 +240,7 @@ public class UpdateApkManager {
                 File apkFile = new File(directory, APK_NAME);
                 if (!apkFile.exists()) {
                     ToastUtils.show("安装包被删除，请重新下载");
+                    return;
                 }
                 uri = FileProvider.getUriForFile(weakReference.get(),
                         "com.fengz.personal.fengarchitecture.fileprovider",
