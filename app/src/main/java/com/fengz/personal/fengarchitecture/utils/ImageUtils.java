@@ -11,10 +11,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.fengz.personal.fengarchitecture.common.GlideRoundTransform;
 
 import java.io.File;
 
@@ -156,6 +158,10 @@ public class ImageUtils {
         loadImage(Glide.with(fragment), model, placeholder, error, imageView, listener);
     }
 
+    public static void loadCircleImage(Context context, Object model, ImageView imageView) {
+        loadCircleImage(Glide.with(context), model, 0, 0, imageView, null);
+    }
+
     /**
      * 加载图片
      */
@@ -164,6 +170,36 @@ public class ImageUtils {
                 .apply(RequestOptions.placeholderOf(placeholder).error(error))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .listener(listener)
+                .into(imageView);
+    }
+
+    public static void loadRadiusImg(Context context, String url, int radius, ImageView view) {
+        RequestOptions options = new RequestOptions()
+//                .error(R.drawable.no_img)
+//                .placeholder(R.drawable.no_img)
+//                .fallback(R.drawable.no_img)
+                .transform(new GlideRoundTransform(radius));
+        Glide.with(context)
+                .load(url)
+                .apply(options)
+                .into(view);
+
+    }
+
+    /**
+     * 加载图片
+     */
+    private static void loadCircleImage(RequestManager requestManager, Object model, int placeholder, int error, ImageView imageView, RequestListener<Drawable> listener) {
+        RequestOptions options = new RequestOptions()
+//                .error(R.drawable.no_img)
+//                .placeholder(R.drawable.no_img)
+//                .fallback(R.drawable.no_img)
+                .transform(new CircleCrop());
+        requestManager.load(model)
+                .apply(RequestOptions.placeholderOf(placeholder).error(error))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .listener(listener)
+                .apply(options)
                 .into(imageView);
     }
 }

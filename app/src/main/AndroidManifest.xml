@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".business1.ui.activity.WelcomeActivity"
+            android:name=".business.ui.activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/WelcomeStyle">
             <intent-filter>
@@ -30,13 +30,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".business1.ui.activity.LoginActivity"
+            android:name=".business.ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business1.ui.activity.MainActivity"
+            android:name=".business.ui.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business1.modules.PermissionProxyActivity.InstallPermissionActivity"
+            android:name=".business.modules.PermissionProxyActivity.InstallPermissionActivity"
             android:screenOrientation="portrait" />
 
         <!--7.0文件权限处理-->

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.fengz.personal.fengarchitecture.R;
 
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 /**
  * 创建时间：2019/1/18
  * 版   本：v1.0.0
- * 作   者：fengzhen
  * <p>
  * 功能描述：可切换 加载 错误 空 无网络 正常 等多种状态界面
  * 原作者：qyxxjd
@@ -119,6 +119,18 @@ public class MultipleRelativeLayout extends RelativeLayout {
      */
     public final void showEmpty(int layoutId, ViewGroup.LayoutParams layoutParams) {
         showEmpty(null == mEmptyView ? inflateView(layoutId) : mEmptyView, layoutParams);
+    }
+
+    /**
+     * 显示空视图 并设置空布局文案
+     * @param msg 空布局文案
+     */
+    public final void showEmpty(String msg) {
+        showEmpty();
+        View view = findViewById(R.id.empty_retry_view);
+        if (view != null && view instanceof TextView) {
+            ((TextView) view).setText(msg);
+        }
     }
 
     /**
@@ -295,7 +307,7 @@ public class MultipleRelativeLayout extends RelativeLayout {
     }
 
     private View inflateView(int layoutId) {
-        return mInflater.inflate(layoutId, null);
+        return mInflater.inflate(layoutId, this,false);
     }
 
     private void showViewById(int viewId) {

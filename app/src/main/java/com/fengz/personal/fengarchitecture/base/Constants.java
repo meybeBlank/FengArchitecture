@@ -2,7 +2,7 @@ package com.fengz.personal.fengarchitecture.base;
 
 import android.text.TextUtils;
 
-import com.fengz.personal.fengarchitecture.business1.model.entity.UserModel;
+import com.fengz.personal.fengarchitecture.business.model.entity.UserModel;
 
 /**
  * 创建时间：2019/1/18

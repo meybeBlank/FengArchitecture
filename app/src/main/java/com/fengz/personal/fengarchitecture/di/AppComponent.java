@@ -20,7 +20,7 @@ import dagger.android.AndroidInjector;
 @Component(modules = {
         ApplicationModule.class,
         ConfigModule.class,
-        Business1Module.class
+        BusinessModule.class
 })
 public interface AppComponent extends AndroidInjector<MyApplication> {
 

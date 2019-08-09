@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.fengz.personal.fengarchitecture.R;
-import com.fengz.personal.fengarchitecture.business1.ui.widget.LoadingDialog;
+import com.fengz.personal.fengarchitecture.business.ui.widget.LoadingDialog;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle2.LifecycleProvider;
 

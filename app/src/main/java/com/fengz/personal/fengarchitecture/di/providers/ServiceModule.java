@@ -1,6 +1,6 @@
 package com.fengz.personal.fengarchitecture.di.providers;
 
-import com.fengz.personal.fengarchitecture.business1.model.api.UserService;
+import com.fengz.personal.fengarchitecture.business.model.api.UserService;
 import com.fengz.personal.fengarchitecture.http.ServiceFactory;
 
 import javax.inject.Singleton;
